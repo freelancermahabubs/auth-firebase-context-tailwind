@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AutContext } from "../providers/AuthProvider";
 const Login = () => {
-  const { singIn } = useContext(AutContext);
+  const { singIn, singInWithGoogle } = useContext(AutContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -15,6 +15,17 @@ const Login = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         form.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleGoogleSingIn = () => {
+    singInWithGoogle()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
       })
       .catch((error) => {
         console.log(error);
@@ -68,6 +79,11 @@ const Login = () => {
               New to Auth Master? Please Register
             </Link>
           </p>
+          <div className="p-5">
+            <button onClick={handleGoogleSingIn} className="btn btn-primary">
+              Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
